@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title><span class="neon-text">OPENMIND</span> — Plataforma de Salud Mental para Jóvenes</title>
+<link href="style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
+.section-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.card-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+.card-body {
+  padding: 15px;
+}
+.card-body h3 {
+  margin: 0 0 10px;
+  font-size: 1.2em;
+}
+</style>
+<link href="img/icon.jpg" rel="icon" type="image/png"/>
+<style>
+.logo {
+    max-height: 80px;
+    width: auto;
+}
+.navbar img, .icon, link[rel="icon"] {
+    max-height: 40px;
+    width: auto;
+}
+</style>
+<style>
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+}
+header .logo {
+    max-height: 80px;
+    width: auto;
+    display: block;
+}
+</style>
+<style>
+.icon-fixed {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    max-height: 40px;
+    width: auto;
+    z-index: 1000;
+}
+</style>
+<style>
+.icon-fixed {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    max-height: 40px;
+    width: auto;
+    z-index: 2000;
+}
+</style>
+<style>
+.bg-blur {
+    filter: blur(5px);
+    opacity: 0.8;
+    transition: all 0.3s ease-in-out;
+}
+.bg-blur:hover {
+    filter: blur(2px);
+    opacity: 1;
+}
+</style>
+<style>
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+}
+.modal-content {
+  position: relative;
+  margin: 5% auto;
+  padding: 20px;
+  width: 80%;
+  max-width: 700px;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(6px) brightness(0.7);
+  color: white;
+  text-shadow: 0px 2px 6px rgba(0,0,0,0.7);
+}
+.modal-text {
+  position: relative;
+  z-index: 1;
+  filter: none;
+}
+.close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+}
+</style>
+<style>
+.card {
+  position: relative;
+  color: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.card.ansiedad::before,
+.card.adiccion::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  background-size: cover;
+  background-position: center;
+  filter: blur(4px) brightness(0.75);
+  transition: filter 0.6s ease-in-out;
+  z-index: 0;
+}
+.card.ansiedad:hover::before,
+.card.adiccion:hover::before {
+  filter: blur(0px) brightness(1);
+}
+.card * {
+  position: relative;
+  z-index: 1;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+}
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  transition: backdrop-filter 0.6s ease-in-out;
+}
+.modal.open {
+  display: flex;
+  backdrop-filter: blur(0px);
+}
+</style></head>
+<body class="theme-day">
+<canvas class="cursor-canvas" id="cursorCanvas"></canvas>
+<header>
+    <div class="icon-container">
+        <a href="#hero"><img src="img/icon_openmind.png" alt="OpenMind Icon" class="site-icon"></a>
+    </div>
+ class="site-header">
+<div class="brand">
+<h1>🧠 OPENMIND</h1>
+</div>
+<div class="controls">
+<button class="control-btn" id="themeToggle" title="Modo Día/Noche">🌞/🌙</button>
+<button class="control-btn" id="soundToggle" title="Sonidos">🔊</button>
+</div>
+</header>
+<main>
+<section class="hero neon-hero" id="hero">
+<div class="hero-content">
+<h2>Bienvenido a <span class="neon-text">OPENMIND</span></h2>
+<p>Recursos, tests y ayuda para tu bienestar mental — diseñado para jóvenes.</p>
+<a class="btn neon-btn" href="#problems">Explorar problemas</a>
+</div>
+</section>
+<section class="section" id="problems">
+<h3 class="section-title">🧩 Problemas de Salud Mental</h3>
+<div class="accordion-grid">
+<!-- 
+<div class="card" style="background-image: url('https://doctormoleon.com/wp-content/uploads/2020/09/TRASTORNOS-ANSIEDAD-jpg.webp');" onclick="openModal('ansiedadModal')" class="card-background">
+  <h3>Ansiedad</h3>
+</div>
+<div id="ansiedadModal" class="modal">
+  <div class="modal-content" style="background-image: url('https://doctormoleon.com/wp-content/uploads/2020/09/TRASTORNOS-ANSIEDAD-jpg.webp');" class="card-background">
+    <span class="close" onclick="closeModal('ansiedadModal')">&times;</span>
+    <div class="modal-text">
+      <h2>Ansiedad Generalizada y Social</h2>
+      <p>Trastorno caracterizado por preocupación excesiva y persistente sobre diversos aspectos de la vida cotidiana, acompañado de síntomas físicos como tensión muscular, inquietud y fatiga.</p>
+    </div>
+  </div>
+</div>
+<br><img src="images/ansiedad.jpg" class="bg-blur" alt="Ansiedad" style="width:100%; border-radius:12px; margin-top:10px;"> -->
+<div class="card neon-card anxiety animate-bounce neon-border ansiedad" style="background-image: url('https://doctormoleon.com/wp-content/uploads/2020/09/TRASTORNOS-ANSIEDAD-jpg.webp'); background-size: cover; background-position: center;" class="card-background">
+<button class="card-title toggle-acc">Ansiedad Generalizada y Social</button>
+<div class="acc-panel">
+<p><strong>Descripción:</strong> Trastorno caracterizado por preocupación excesiva y persistente... (ver recursos).</p>
+<p><strong>Síntomas:</strong> Preocupación excesiva diaria; Tensión muscular; Sudoración; Palpitaciones en social; Evitación; Temblores; Pensamientos catastróficos; Dificultad para respirar; Náuseas; Insomnio.</p>
+<p><strong>Tips:</strong> Respiración 4-7-8; Exposición gradual; Limitar cafeína; Ejercicio; TCC breve.</p>
+<p><strong>Recursos:</strong> <a href="https://youtu.be/S1g1cQjUguI?si=vtXd4ovKmqThzsol" target="_blank">Video</a> • <a href="http://www.scielo.org.co/scielo.php?script=sci_arttext&amp;pid=S0034-74502016000500008" target="_blank">Paper</a> • <a href="https://screening.mhanational.org/screening-tools/test-de-ansiedad/" target="_blank">Test GAD-7</a></p>
+<a class="btn small neon-btn" data-test="GAD-7" href="#tests">Ir al Test GAD-7</a>
+</div>
+</div>
+<!-- Depresión -->
+<div class="card neon-card depresion animate-pulse neon-border"><div class="card-background" style="background-image: url('assets/img/depresion.png');"></div>
+<style>#depresion, .depresion {background-image: url("img/distimia-tristeza-fin.jpg"); background-size: cover; background-position: center;}</style>
+
+<button class="card-title toggle-acc">Depresión y Distimia</button>
+<div class="acc-panel">
+<p><strong>Descripción:</strong> Estado de ánimo depresivo persistente o pérdida de interés...</p>
+<p><strong>Síntomas:</strong> Tristeza &gt;2 semanas; Pérdida interés; Aislamiento; Cambios de peso; Fatiga; Culpa; Dificultad concentrarse; Irritabilidad; Pensamientos de muerte; Llanto frecuente.</p>
+<p><strong>Tips:</strong> Rutina de sueño; Exposición solar; Omega-3; Actividad física; Mantener contacto social.</p>
+<p><strong>Recursos:</strong> <a href="https://youtu.be/WIb4B79B9zQ?si=wQqw0qnNuvbqdx3I" target="_blank">Video</a> • <a href="https://www.redalyc.org/pdf/804/80401303.pdf" target="_blank">Paper</a> • <a href="https://selia.co/es/test-de-depresion-online/" target="_blank">PHQ-9</a></p>
+<a class="btn small neon-btn" data-test="PHQ-9" href="#tests">Ir al Test PHQ-9</a>
+</div>
+</div>
+<!-- TCA -->
+<div class="card neon-card tca animate-spin-slow neon-border"><div class="card-background" style="background-image: url('assets/img/tca.png');"></div>
+<style>#tca, .tca {background-image: url("img/A2-1.jpg"); background-size: cover; background-position: center;}</style>
+
+<button class="card-title toggle-acc">Trastornos Alimentarios</button>
+<div class="acc-panel">
+<p><strong>Descripción:</strong> Anorexia, bulimia y trastorno por atracón...</p>
+<p><strong>Síntomas:</strong> Restricción, ejercicio compulsivo, laxantes, ir al baño, obsesión por calorías, fluctuaciones, comer a escondidas, evitar comidas sociales, distorsión corporal, amenorrea.</p>
+<p><strong>Tips:</strong> Comidas regulares; No pesarse; Terapia nutricional; Grupos de apoyo; Mindful eating.</p>
+<p><strong>Recursos:</strong> <a href="https://youtu.be/2UcCN6fztmM?si=srAtpsWxgtpdgTbD" target="_blank">Video</a> • <a href="http://www.scielo.org.co/scielo.php?script=sci_arttext&amp;pid=S0034-74502022000400318" target="_blank">Paper</a> • <a href="https://www.psicomaster.es/test/test-tca/" target="_blank">SCOFF</a></p>
+<a class="btn small neon-btn" data-test="SCOFF" href="#tests">Ir al Test SCOFF</a>
+</div>
+</div>
+<!-- TDAH -->
+<div class="card neon-card tdah animate-wiggle neon-border"><div class="card-background" style="background-image: url('assets/img/tdah.png');"></div>
+<style>#tdah, .tdah {background-image: url("img/tdah-850x560-1.jpg"); background-size: cover; background-position: center;}</style>
+
+<button class="card-title toggle-acc">TDAH</button>
+<div class="acc-panel">
+<p><strong>Descripción:</strong> Inatención e hiperactividad que afecta el funcionamiento.</p>
+<p><strong>Síntomas:</strong> Dificultad organizar, pérdida objetos, evitar tareas difíciles, movimiento constante, interrupciones, dificultad esperar, olvido, errores por descuido, seguir instrucciones, inquietud interna.</p>
+<p><strong>Tips:</strong> Pomodoro; listas visuales; espacio sin distracciones; ejercicio antes de estudiar; dividir tareas.</p>
+<p><strong>Recursos:</strong> <a href="https://youtu.be/FGQ_Gt7UHp8?si=yYWpJbCcE4xLpfrC" target="_blank">Video</a> • <a href="https://scielo.isciii.es/scielo.php?script=sci_arttext&amp;pid=S1139-76322019000300004" target="_blank">Paper</a> • <a href="https://www.psychologytoday.com/co/test/salud/test-de-tdah" target="_blank">ASRS</a></p>
+<a class="btn small neon-btn" data-test="ASRS" href="#tests">Ir al Test ASRS</a>
+</div>
+</div>
+<!-- Estrés -->
+<div class="card neon-card estres animate-float neon-border"><div class="card-background" style="background-image: url('assets/img/estres.png');"></div>
+<style>#estres, .estres {background-image: url("img/estres.jpg.webp"); background-size: cover; background-position: center;}</style>
+
+<button class="card-title toggle-acc">Estrés</button>
+<div class="acc-panel">
+<p><strong>Descripción:</strong> Respuesta a demandas que sobrepasan recursos; si es crónico, puede afectar el funcionamiento.</p>
+<p><strong>Síntomas:</strong> Dolores de cabeza, bruxismo, caída cabello, problemas digestivos, contracturas, cansancio, cambios de apetito, irritabilidad, dificultad concentrarse, más enfermedades.</p>
+<p><strong>Tips:</strong> Técnica 5-4-3-2-1; baños con sales; stretching; limitar noticias; gestión del tiempo.</p>
+<p><strong>Recursos:</strong> <a href="https://youtu.be/ihLiNXyaHoM?si=7erIho_QakQ4GyFK" target="_blank">Video</a> • <a href="#" target="_blank">Paper</a> • <a href="#" target="_blank">PSS</a></p>
+<a class="btn small neon-btn" data-test="PSS" href="#tests">Ir al Test PSS</a>
+</div>
+</div>
+<!-- 
+<div class="card" style="background-image: url('https://media.licdn.com/dms/image/v2/C4E12AQHhNKvlj91MhQ/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1520141860487?e=2147483647&v=beta&t=C4sOmwaHwD2e7Pp6JJ2EQsNTc7hnrLxEZuvD02TUk9Y');" onclick="openModal('sustanciasModal')" class="card-background">
+  <h3>Sustancias</h3>
+</div>
+<div id="sustanciasModal" class="modal">
+  <div class="modal-content" style="background-image: url('https://media.licdn.com/dms/image/v2/C4E12AQHhNKvlj91MhQ/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1520141860487?e=2147483647&v=beta&t=C4sOmwaHwD2e7Pp6JJ2EQsNTc7hnrLxEZuvD02TUk9Y');" class="card-background">
+    <span class="close" onclick="closeModal('sustanciasModal')">&times;</span>
+    <div class="modal-text">
+      <h2>Abuso y Dependencia de Sustancias</h2>
+      <p>El consumo problemático de sustancias como alcohol, drogas y fármacos puede generar dependencia, afectar la salud física y mental, y deteriorar las relaciones interpersonales.</p>
+    </div>
+  </div>
+</div>
+<br><img src="images/adiccion.jpg" class="bg-blur" alt="Sustancias" style="width:100%; border-radius:12px; margin-top:10px;"> -->
+<div class="card neon-card sustancias animate-tilt neon-border adiccion" style="background-image: url('https://i.ytimg.com/vi/eIssYDYnIK4/maxresdefault.jpg'); background-size: cover; background-position: center;" class="card-background">
+<button class="card-title toggle-acc">Abuso y Dependencia de Sustancias</button>
+<div class="acc-panel">
+<p><strong>Descripción:</strong> Patrón de consumo que genera deterioro y dependencia.</p>
+<p><strong>Síntomas:</strong> Ojos rojos, cambios de humor, aislamiento, problemas económicos, pérdida interés, olores, elementos para consumo, negación, abstinencia.</p>
+<p><strong>Tips:</strong> Redes de apoyo; terapia conductual; actividades alternativas; metas cortas; evitar ambientes asociados.</p>
+<p><strong>Recursos:</strong> <a href="https://youtu.be/lVZI8YWsXlU?si=UaTu9oCWDjGgrJ_O" target="_blank">Video</a> • <a href="https://repository.unab.edu.co/bitstream/handle/20.500.12749/25710/Art%C3%ADculo.pdf?sequence=1" target="_blank">Paper</a> • <a href="https://www.adictalia.es/adictest/" target="_blank">ASSIST</a></p>
+<a class="btn small neon-btn" data-test="ASSIST" href="#tests">Ir al Test ASSIST</a>
+</div>
+</div>
+</div>
+<canvas id="resultsChart" style="max-width:600px; margin:20px auto; display:block;"></canvas><!-- Eliminado div estático de resultados duplicados --></section>
+<section class="section" id="tests">
+<h3 class="section-title">🧪 Tests de Autoevaluación</h3>
+<table class="tests-table">
+<thead><tr><th>Test</th><th>Duración</th><th>Enlace</th></tr></thead>
+<tbody>
+<tr><td>GAD-7 (Ansiedad)</td><td>3-5 min</td><td><a href="https://screening.mhanational.org/screening-tools/test-de-ansiedad/" target="_blank">Hacer test ⭐</a></td></tr>
+<tr><td>PHQ-9 (Depresión)</td><td>5-7 min</td><td><a href="https://selia.co/es/test-de-depresion-online/" target="_blank">Hacer test ⭐</a></td></tr>
+<tr><td>SCOFF (TCA)</td><td>2-3 min</td><td><a href="https://www.psicomaster.es/test/test-tca/" target="_blank">Hacer test ⭐</a></td></tr>
+<tr><td>ASRS (TDAH)</td><td>4-6 min</td><td><a href="https://www.psychologytoday.com/co/test/salud/test-de-tdah" target="_blank">Hacer test ⭐</a></td></tr>
+<tr><td>PSS (Estrés)</td><td>5-7 min</td><td><a href="#" target="_blank">Hacer test ⭐</a></td></tr>
+<tr><td>ASSIST (Sustancias)</td><td>7-10 min</td><td><a href="https://www.adictalia.es/adictest/" target="_blank">Hacer test ⭐</a></td></tr>
+</tbody>
+</table>
+</section>
+<section class="section" id="relax">
+<h3 class="section-title">🧘 Técnicas de Relajación</h3>
+<div class="relax-grid">
+<div class="relax-card">
+<h4>Respiración 4-7-8</h4>
+<iframe allowfullscreen="" src="https://www.youtube.com/embed/4hB_v2mJdGg" title="Respiración 4-7-8"></iframe>
+</div>
+<div class="relax-card">
+<h4>Mindfulness básico</h4>
+<iframe allowfullscreen="" src="https://www.youtube.com/embed/3oCC4NDgYrY" title="Mindfulness"></iframe>
+</div>
+<div class="relax-card">
+<h4>Relajación muscular progresiva</h4>
+<iframe allowfullscreen="" src="https://www.youtube.com/embed/BIPy2P6_r-g" title="RMP"></iframe>
+</div>
+<div class="relax-card">
+<h4>Grounding 5-4-3-2-1</h4>
+<iframe allowfullscreen="" src="https://www.youtube.com/embed/pjRMg6KALiw" title="Grounding"></iframe>
+</div>
+</div>
+</section>
+<section class="section" id="directory">
+<h3 class="section-title">📞 Directorio de Ayuda - Ibagué y Colombia</h3>
+<div class="tabs">
+<button class="tab-btn active" data-tab="lines">Líneas</button>
+<button class="tab-btn" data-tab="psych">Psicólogos</button>
+<button class="tab-btn" data-tab="map">Mapa</button>
+</div>
+<div class="tab-content" id="lines">
+<ul>
+<li><strong>Línea 106</strong> — #106 — Crisis psicológica 24/7</li>
+<li><strong>Línea Púrpura</strong> — #155 — Violencia de género</li>
+<li><strong>Línea de la Vida</strong> — 333 033 3588 — Prevención del suicidio</li>
+</ul>
+</div>
+<div class="tab-content hidden" id="psych">
+<ul>
+<li>Centro de Escucha Ibagué — 318 765 4321 — Cra 5 #12-34</li>
+<li>Psic. Ana María Rodríguez — 320 654 9871 — <a href="https://wa.me/573206549871">WhatsApp</a></li>
+<li>Hospital Federico Lleras — (608) 277 2020 — Urgencias 24/7</li>
+</ul>
+</div>
+<div class="tab-content hidden" id="map">
+<p>Mapa Ibagué (compartido): <a href="https://share.google/CkOQYZOs4fp8Lb6ne" target="_blank">Abrir mapa</a></p>
+</div>
+</section>
+<section class="section" id="resources">
+<h3 class="section-title">📚 Recursos Adicionales</h3>
+<div class="resources-grid">
+<a class="resource" href="https://youtube.com/playlist?list=PLWru5D3MytElK9JHtOUAB-mQQXouV_xBm" target="_blank">🎥 Playlist salud mental</a>
+<a class="resource" href="https://www.minsalud.gov.co/sites/rid/Lists/BibliotecaDigital/RIDE/VS/PP/ENT/asis-salud-mental-determinantes-sociales-colombia.pdf" target="_blank">📄 Paper salud mental Colombia</a>
+<a class="resource" href="https://play.google.com/store/apps/details?id=app.meditasyon" target="_blank">📱 Meditopia</a>
+<a class="resource" href="https://play.google.com/store/apps/details?id=com.focusatwill.androidApp" target="_blank">📱 Focus@Will</a>
+<a class="resource" href="https://play.google.com/store/apps/details?id=com.calm.android" target="_blank">📱 Calm</a>
+<a class="resource" href="https://play.google.com/store/apps/details?id=com.trello" target="_blank">📱 Trello</a>
+<a class="resource" href="https://play.google.com/store/apps/details?id=daily.planner.routine.habits" target="_blank">📱 Agenda de rutina diaria</a>
+</div>
+</section>
+<section class="section" id="wellbeing">
+<h3 class="section-title">🧠 Test General de Bienestar Mental</h3>
+<form class="well-form" id="wellForm">
+<!-- 10 questions with emojis -->
+<ol>
+<li>
+<label>1. ¿Cómo describirías tu estado de ánimo la mayor parte del tiempo?</label>
+<select name="q1">
+<option>😊 Mayormente positivo y estable</option>
+<option>😐 Variable, con altos y bajos</option>
+<option>😔 Mayormente negativo o triste</option>
+<option>😣 Constantemente abrumado/a</option>
+</select>
+</li>
+<li>
+<label>2. ¿Cómo ha sido tu patrón de sueño?</label>
+<select name="q2">
+<option>😴 Duermo bien y descanso suficiente</option>
+<option>🥱 A veces tengo dificultad para dormir</option>
+<option>😪 Frecuentes problemas de sueño</option>
+<option>😫 Insomnio constante o sueño excesivo</option>
+</select>
+</li>
+<li>
+<label>3. ¿Cómo manejas situaciones estresantes?</label>
+<select name="q3">
+<option>💪 Las enfrento con calma y confianza</option>
+<option>🤔 Me cuesta pero logro manejarlas</option>
+<option>😰 Me siento abrumado/a frecuentemente</option>
+<option>😵 Colapso emocional o evasión</option>
+</select>
+</li>
+<li>
+<label>4. ¿Cómo es tu apetito y relación con la comida?</label>
+<select name="q4">
+<option>🍽 Normal y equilibrado</option>
+<option>🍕 Algunos cambios ocasionales</option>
+<option>🍭 Cambios significativos</option>
+<option>🚫 Conductas alimentarias preocupantes</option>
+</select>
+</li>
+<li>
+<label>5. ¿Cómo te sientes en situaciones sociales?</label>
+<select name="q5">
+<option>🎉 Cómodo/a y seguro/a</option>
+<option>😐 Algo nervioso/a pero participo</option>
+<option>😖 Ansioso/a y evito algunas situaciones</option>
+<option>🏠 Aislamiento social significativo</option>
+</select>
+</li>
+<li>
+<label>6. ¿Cómo es tu nivel de energía y motivación?</label>
+<select name="q6">
+<option>⚡ Energético/a y motivado/a</option>
+<option>🔋 Normal, con altibajos</option>
+<option>🔌 Baja energía frecuentemente</option>
+<option>💀 Fatiga constante y desmotivación</option>
+</select>
+</li>
+<li>
+<label>7. ¿Cómo es tu capacidad de concentración?</label>
+<select name="q7">
+<option>🎯 Buena concentración</option>
+<option>📚 Ocasionalmente distraído/a</option>
+<option>🤯 Dificultad frecuente</option>
+<option>🧠 Incapacidad para enfocarte</option>
+</select>
+</li>
+<li>
+<label>8. ¿Experimentas síntomas físicos inexplicables?</label>
+<select name="q8">
+<option>💚 Casi nunca</option>
+<option>💛 Ocasionalmente</option>
+<option>🧡 Frecuentemente</option>
+<option>❌ Constantemente</option>
+</select>
+</li>
+<li>
+<label>9. ¿Cómo es tu autoestima y autopercepción?</label>
+<select name="q9">
+<option>🌟 Positiva y realista</option>
+<option>✨ Variable, generalmente buena</option>
+<option>💫 Mayormente negativa</option>
+<option>🌑 Extremadamente negativa</option>
+</select>
+</li>
+<li>
+<label>10. ¿Has tenido pensamientos sobre muerte o autolesión?</label>
+<select name="q10">
+<option>❌ Nunca</option>
+<option>⚠️ Pensamientos pasajeros sin intención</option>
+<option>🔴 Pensamientos frecuentes pero sin plan</option>
+<option>🚨 Pensamientos con intención o plan</option>
+</select>
+</li>
+</ol>
+<button class="btn neon-btn" type="submit">Enviar Test</button>
+
+<!-- 🌈 Bloque de Bienestar y Contacto -->
+<div id="bloque-bienestar" style="margin-top: 30px; padding: 20px; border-radius: 12px; background-color: #f0f8ff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center;">
+  <h3>🌈 Para Todos los Resultados</h3>
+  <p>Donde quiera que estés en tu camino de bienestar, recuerda:</p>
+  <p>Cada día es una nueva oportunidad para cuidar de ti mismo/a.</p>
+  <p>Tu valor no depende de tu estado mental actual.</p>
+  <p>Mereces apoyo, comprensión y cuidado.</p>
+  <p><strong>¡Tú importas! 💖</strong></p>
+  <hr style="margin: 15px 0;">
+  <h4>🌟 Contacto de Apoyo Inmediato</h4>
+  <p><strong>Línea 106:</strong> #106 (24/7)</p>
+  <p><strong>WhatsApp OPENMIND:</strong> <a href="https://wa.me/573023265907" target="_blank">wa.me/573023265907</a></p>
+  <p><strong>Psicóloga Ana Rodríguez:</strong> 320 654 9871</p>
+</div>
+
+</form>
+
+<section id="wellbeing-results" class="section" style="display:none; margin-top:2rem;">
+  <div id="result-card" style="background:#f9f9fb; border-radius:1rem; padding:2rem; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;"></div>
+</section>
+
+<script>
+document.getElementById('wellForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const form = e.target;
+  const answers = Array.from(form.querySelectorAll('select')).map(s => s.value.trim());
+  const counts = { A:0, B:0, C:0, D:0 };
+
+  answers.forEach(val => {
+    if (val.startsWith('😊') || val.startsWith('😴') || val.startsWith('💪')) counts.A++;
+    else if (val.startsWith('😐') || val.startsWith('🥱') || val.startsWith('🤔')) counts.B++;
+    else if (val.startsWith('😔') || val.startsWith('😪') || val.startsWith('😰')) counts.C++;
+    else if (val.startsWith('😣') || val.startsWith('😫') || val.startsWith('😵')) counts.D++;
+  });
+
+  let majority = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+  const resultsSection = document.getElementById('wellbeing-results');
+  const resultCard = document.getElementById('result-card');
+  let title = '', message = '', percent = '', color = '', recommendation = '';
+
+  switch(majority) {
+    case 'A':
+      title = '🌟 Excelente Bienestar';
+      percent = '90-100%';
+      message = 'Tu salud mental se encuentra en un estado óptimo. Continúa con tus buenos hábitos y recuerda mantener el equilibrio.';
+      recommendation = '💫 Tu autocuidado es ejemplar — sigue siendo tu prioridad. 📈 Mantén tus rutinas de bienestar y comparte tus estrategias con otros.';
+      color = '#28a745';
+      break;
+    case 'B':
+      title = '🌈 Buen Estado con Mejoras';
+      percent = '70-89%';
+      message = 'Tu bienestar mental es bueno, pero hay áreas de oportunidad. Pequeños ajustes pueden hacer una gran diferencia.';
+      recommendation = '💫 Estás en buen camino — pequeños cambios, grandes resultados. 📈 Practica una técnica de relajación diaria y establece límites saludables.';
+      color = '#ffc107';
+      break;
+    case 'C':
+      title = '⚠️ Atención Necesaria';
+      percent = '50-69%';
+      message = 'Tu bienestar requiere atención. Es momento de priorizar tu salud mental y buscar estrategias de apoyo.';
+      recommendation = '💫 Tu valentía al reconocer esto es el primer paso hacia el bienestar. 📈 Contacta a un profesional y establece una rutina de autocuidado básica.';
+      color = '#fd7e14';
+      break;
+    case 'D':
+      title = '🚨 Apoyo Urgente Recomendado';
+      percent = '0-49%';
+      message = 'Tu bienestar mental necesita atención inmediata. No estás solo/a y hay ayuda disponible para ti.';
+      recommendation = '💫 Pedir ayuda es un acto de fortaleza — mereces sentirte mejor. 📈 Contacta inmediatamente a un profesional de salud mental.';
+      color = '#dc3545';
+      break;
+  }
+
+  resultCard.innerHTML = `
+    <h2 style="color:${color}; font-size:1.8rem; margin-bottom:1rem;">${title}</h2>
+    <p><strong>Resultado:</strong> ${percent}</p>
+    <p>${message}</p>
+    <p style="margin-top:1rem;">${recommendation}</p>
+    <hr style="margin:1.5rem 0;">
+    <p style="font-style:italic; color:#666;">🌱 Este test es una guía, no un diagnóstico.</p>
+  `;
+
+  resultsSection.style.display = 'block';
+  resultsSection.scrollIntoView({ behavior: 'smooth' });
+});
+</script>
+
+
+<section id="wellbeing-results" class="section">
+  <h2><!-- Texto duplicado debajo del buzón de sugerencias eliminado --></em></p>
+</section>
+
+</section>
+<section class="section" id="directory">
+<h3 class="section-title">📞 Directorio de Ayuda - Ibagué y Colombia</h3>
+<div class="table-container">
+<table class="neon-table">
+<thead>
+<tr><th>Servicio</th><th>Contacto</th><th>Dirección</th><th>Tipo Ayuda</th></tr>
+</thead>
+<tbody>
+<tr><td>Línea 106</td><td>#106</td><td>Nacional</td><td>Crisis psicológica 24/7</td></tr>
+<tr><td>Centro de Escucha Ibagué</td><td>318 765 4321</td><td>Cra 5 #12-34</td><td>Apoyo emocional</td></tr>
+<tr><td>Psic. Laura Martínez</td><td>320 987 6543</td><td>Clínica Comfamiliar</td><td>Terapia individual</td></tr>
+<tr><td>Psiquiatra Juan Pérez</td><td>321 456 7890</td><td>Centro Médico Ibagué</td><td>Evaluación médica</td></tr>
+<tr><td>Hospital Federico Lleras</td><td>(608) 277 2020</td><td>Cra 4 #15-42</td><td>Urgencias 24/7</td></tr>
+<tr><td>Narcóticos Anónimos</td><td>318 555 1234</td><td>Calle 15 #8-25</td><td>Grupos de apoyo</td></tr>
+<tr><td>Línea PURA</td><td>018000112439</td><td>Nacional</td><td>Prevención de sustancias</td></tr>
+<tr><td>UPS Universidad del Tolima</td><td>(608) 277 1212</td><td>Cra 1 #42-125</td><td>Terapia estudiantil</td></tr>
+</tbody>
+</table>
+</div>
+<h4>📍 Ibagué - Psicólogos y Centros</h4>
+<div class="card neon-card">
+<h5>Centro de Escucha Ibagué</h5>
+<p>📞 318 765 4321 | <a href="https://www.facebook.com/share/1AbkWhgPRZ/">Facebook</a></p>
+</div>
+<div class="card neon-card ansiedad" style="background-image: url('https://doctormoleon.com/wp-content/uploads/2020/09/TRASTORNOS-ANSIEDAD-jpg.webp'); background-size: cover; background-position: center;" class="card-background">
+<h5>👩‍💼 Psicóloga Ana María Rodríguez - Ibagué</h5>
+<p><b>Especialidades:</b></p>
+<ul>
+<li>Terapia cognitivo-conductual</li>
+<li>Salud mental adolescente</li>
+<li>Manejo de ansiedad y depresión</li>
+<li>Orientación familiar</li>
+</ul>
+<p><b>Dirección:</b> Carrera 5# 23-45, Consultorio 302, Edificio Central Médico, Ibagué</p>
+<p><b>Contacto:</b> 📞 320 654 9871 | <a href="https://wa.me/573206549871">WhatsApp</a> | <a href="mailto:psic.anarodriguez.ibague@gmail.com">Email</a></p>
+<p><b>Redes Sociales:</b> Instagram @psic.ana_rodriguez.ib | Facebook: Psic. Ana Rodríguez | <a href="http://www.psic-anarodriguez.com">Web</a></p>
+<p><b>Horario:</b> Lunes a Viernes: 8:00 am - 6:00 pm</p>
+</div>
+<h4>🇨🇴 Colombia - Recursos Nacionales</h4>
+<div class="card neon-card">
+<h5>Psicólogos Sin Fronteras</h5>
+<p>📞 018000 113113 | <a href="https://www.instagram.com/slcpsf_psicologos_sin_frontera?igsh=emo0Mm9rMmt5enk0">Instagram</a></p>
+</div>
+<div class="card neon-card">
+<h5>Red de Apoyo Emocional</h5>
+<p>📞 018000 112440 | <a href="https://www.facebook.com/share/1BMPE6S8YK/">Facebook</a></p>
+</div>
+</section>
+<section class="section" id="suggestions">
+<h3 class="section-title">💬 Buzón de Sugerencias</h3>
+<form class="suggest-form">
+<p>📝 ¿Cómo calificarías estos recursos?</p>
+<label><input name="rating" type="radio"/> ⭐⭐⭐⭐⭐ Muy útiles</label><br/>
+<label><input name="rating" type="radio"/> ⭐⭐⭐⭐ Útiles</label><br/>
+<label><input name="rating" type="radio"/> ⭐⭐⭐ Regulares</label><br/>
+<label><input name="rating" type="radio"/> ⭐⭐ Poco útiles</label><br/>
+<label><input name="rating" type="radio"/> ⭐ No útiles</label><br/>
+<p>😊 ¿Cómo te sientes después de usar estos recursos?</p>
+<label><input name="feeling" type="radio"/> 😊 Mucho mejor</label><br/>
+<label><input name="feeling" type="radio"/> 🙂 Algo mejor</label><br/>
+<label><input name="feeling" type="radio"/> 😐 Igual</label><br/>
+<label><input name="feeling" type="radio"/> 🙁 Algo peor</label><br/>
+<label><input name="feeling" type="radio"/> 😣 Mucho peor</label><br/>
+<p>💡 Sugerencias o comentarios:</p>
+<textarea placeholder="Escribe aquí..." rows="4"></textarea>
+<div class="form-actions">
+<button class="btn neon-btn" type="submit">📤 Enviar</button>
+</div>
+</form>
+
+<section id="wellbeing-results" class="section" style="display:none; margin-top:2rem;">
+  <div id="result-card" style="background:#f9f9fb; border-radius:1rem; padding:2rem; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center;"></div>
+</section>
+
+<script>
+document.getElementById('wellForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const form = e.target;
+  const answers = Array.from(form.querySelectorAll('select')).map(s => s.value.trim());
+  const counts = { A:0, B:0, C:0, D:0 };
+
+  answers.forEach(val => {
+    if (val.startsWith('😊') || val.startsWith('😴') || val.startsWith('💪')) counts.A++;
+    else if (val.startsWith('😐') || val.startsWith('🥱') || val.startsWith('🤔')) counts.B++;
+    else if (val.startsWith('😔') || val.startsWith('😪') || val.startsWith('😰')) counts.C++;
+    else if (val.startsWith('😣') || val.startsWith('😫') || val.startsWith('😵')) counts.D++;
+  });
+
+  let majority = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+  const resultsSection = document.getElementById('wellbeing-results');
+  const resultCard = document.getElementById('result-card');
+  let title = '', message = '', percent = '', color = '', recommendation = '';
+
+  switch(majority) {
+    case 'A':
+      title = '🌟 Excelente Bienestar';
+      percent = '90-100%';
+      message = 'Tu salud mental se encuentra en un estado óptimo. Continúa con tus buenos hábitos y recuerda mantener el equilibrio.';
+      recommendation = '💫 Tu autocuidado es ejemplar — sigue siendo tu prioridad. 📈 Mantén tus rutinas de bienestar y comparte tus estrategias con otros.';
+      color = '#28a745';
+      break;
+    case 'B':
+      title = '🌈 Buen Estado con Mejoras';
+      percent = '70-89%';
+      message = 'Tu bienestar mental es bueno, pero hay áreas de oportunidad. Pequeños ajustes pueden hacer una gran diferencia.';
+      recommendation = '💫 Estás en buen camino — pequeños cambios, grandes resultados. 📈 Practica una técnica de relajación diaria y establece límites saludables.';
+      color = '#ffc107';
+      break;
+    case 'C':
+      title = '⚠️ Atención Necesaria';
+      percent = '50-69%';
+      message = 'Tu bienestar requiere atención. Es momento de priorizar tu salud mental y buscar estrategias de apoyo.';
+      recommendation = '💫 Tu valentía al reconocer esto es el primer paso hacia el bienestar. 📈 Contacta a un profesional y establece una rutina de autocuidado básica.';
+      color = '#fd7e14';
+      break;
+    case 'D':
+      title = '🚨 Apoyo Urgente Recomendado';
+      percent = '0-49%';
+      message = 'Tu bienestar mental necesita atención inmediata. No estás solo/a y hay ayuda disponible para ti.';
+      recommendation = '💫 Pedir ayuda es un acto de fortaleza — mereces sentirte mejor. 📈 Contacta inmediatamente a un profesional de salud mental.';
+      color = '#dc3545';
+      break;
+  }
+
+  resultCard.innerHTML = `
+    <h2 style="color:${color}; font-size:1.8rem; margin-bottom:1rem;">${title}</h2>
+    <p><strong>Resultado:</strong> ${percent}</p>
+    <p>${message}</p>
+    <p style="margin-top:1rem;">${recommendation}</p>
+    <hr style="margin:1.5rem 0;">
+    <p style="font-style:italic; color:#666;">🌱 Este test es una guía, no un diagnóstico.</p>
+  `;
+
+  resultsSection.style.display = 'block';
+  resultsSection.scrollIntoView({ behavior: 'smooth' });
+});
+</script>
+
+
+<section id="wellbeing-results" class="section">
+  <h2><!-- Texto duplicado debajo del buzón de sugerencias eliminado --></em></p>
+</section>
+
+<p>¡Tu opinión es importante! Nos ayuda a mejorar y brindar mejor apoyo.</p>
+<p>Contacto: <a href="mailto:saraluciasoto26@gmail.com">saraluciasoto26@gmail.com</a></p>
+<p class="hint">⚠️ Recuerda: Este test es solo una guía orientativa. Si necesitas ayuda profesional, contacta a los especialistas mencionados.</p>
+</section>
+<section class="section" id="resources">
+<h3 class="section-title">📚 Recursos Adicionales</h3>
+<h4>📹 Videos Educativos</h4>
+<ul>
+<li><a href="https://youtube.com/playlist?list=PLWru5D3MytElK9JHtOUAB-mQQXouV_xBm&amp;si=npTIX-m0gHl_VGbF">Playlist completa de salud mental</a></li>
+<li><a href="https://youtu.be/vhkHn2xCEBs?si=8YzNN5X8ozX6HJsH">Técnicas de estudio para TDAH</a></li>
+<li><a href="https://youtu.be/fiN-_a9O2AA?si=P-CY80Rnk82HShaS">Alimentación consciente</a></li>
+</ul>
+<h4>📄 Papers Científicos</h4>
+<ul>
+<li><a href="https://www.minsalud.gov.co/sites/rid/Lists/BibliotecaDigital/RIDE/VS/PP/ENT/asis-salud-mental-determinantes-sociales-colombia.pdf">Salud mental en adolescentes colombianos</a></li>
+<li><a href="https://www.charliehealth.com/research/student-stress-mental-health">Estrés académico y salud mental</a></li>
+<li><a href="https://www.minsalud.gov.co/sites/rid/Lists/BibliotecaDigital/RIDE/VS/PP/ENT/orientaciones-aprovechamiento-virtualidad-salud-mental.pdf">Intervenciones digitales en salud mental</a></li>
+</ul>
+</section>
+<footer class="site-footer">
+<p>Contacto: <a href="mailto:saraluciasoto26@gmail.com">saraluciasoto26@gmail.com</a></p>
+<p>© OPENMIND — Recursos informativos. Si estás en riesgo, usa líneas de emergencia.</p>
+</footer>
+</main>
+<audio id="bgAudio" loop="" src="assets/sounds/WhatsApp-Video-2025-09-21-at-10.47.07-PM.mp3"></audio>
+<audio id="fxAudio" src="assets/sounds/AUD-20250921-WA0083..mp3"></audio>
+<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.getElementById("generalTestForm")?.addEventListener("submit", function(e) {
+  e.preventDefault();
+  const scores = [];
+  const selects = e.target.querySelectorAll("select");
+  selects.forEach(sel => {
+    scores.push(sel.selectedIndex);
+  });
+
+  // Colores dinámicos
+  const colors = scores.map(score => {
+    if (score <= 1) return "rgba(0, 255, 100, 0.7)";   // Verde
+    if (score == 2) return "rgba(255, 215, 0, 0.7)";   // Amarillo
+    return "rgba(255, 80, 80, 0.7)";                   // Rojo
+  });
+
+  const ctx = document.getElementById("resultsChart").getContext("2d");
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: scores.map((_,i) => "P"+(i+1)),
+      datasets: [{
+        label: "Resultados Test Bienestar",
+        data: scores,
+        backgroundColor: colors,
+        borderColor: colors.map(c => c.replace("0.7","1")),
+        borderWidth: 2
+      }]
+    },
+    options: {
+      scales: { y: { beginAtZero: true, max: 4 } }
+    }
+  });
+
+  // Calcular promedio y mostrar mensaje
+  const avg = scores.reduce((a,b)=>a+b,0) / scores.length;
+  let message = "";
+  if (avg <= 1.5) message = "🟢 Tu bienestar es alto.";
+  else if (avg <= 2.5) message = "🟡 Tu bienestar es moderado.";
+  else message = "🔴 Tu bienestar es bajo, considera buscar apoyo.";
+  document.getElementById("resultMessage").innerText = message;
+});
+</script>
+<script>
+function openModal(id) {
+  document.getElementById(id).style.display = "block";
+}
+function closeModal(id) {
+  document.getElementById(id).style.display = "none";
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+/* style.css - Neon cartoon style for OPENMIND */
+:root{
+  --bg-day: #0f172a;
+  --bg-night: #07060a;
+  --text: #ffffff;
+  --neon-blue: #00d4ff;
+  --neon-pink: #ff35c7;
+  --neon-green: #6effa1;
+  --neon-yellow: #ffd24d;
+  --glass: rgba(255,255,255,0.06);
+  --card-radius: 18px;
+}
+
+/* Theme variables for day/night switch */
+body.theme-day{
+  --page-bg: linear-gradient(135deg,#e6f7ff 0%, #fef3ff 100%);
+  color: #071033;
+}
+body.theme-night{
+  --page-bg: linear-gradient(135deg,#05021a 0%, #0b0620 100%);
+  color: var(--text);
+  background-color: #020204;
+}
+
+body{
+  margin:0; font-family: 'Poppins', sans-serif;
+  background: var(--page-bg);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* Cursor canvas covers page */
+.cursor-canvas{
+  position:fixed; pointer-events:none; left:0; top:0; width:100%; height:100%; z-index:9999;
+}
+
+/* Header */
+.site-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 28px; gap:12px;
+  background: transparent; position:sticky; top:0; z-index:40;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.logo-large{width:64px;height:64px;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,0.25)}
+.logo-small{width:36px;height:36px;border-radius:50%}
+.controls{display:flex;gap:8px}
+.control-btn{background:linear-gradient(90deg,var(--neon-pink),var(--neon-blue));border:none;padding:10px;border-radius:12px;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,0.2);font-size:18px;color:#fff}
+.control-btn:hover{transform:translateY(-3px);filter:drop-shadow(0 8px 18px rgba(0,0,0,0.25))}
+
+/* Hero */
+.hero{padding:40px;border-radius:20px;margin:18px;display:flex;align-items:center;justify-content:center}
+.neon-hero{background:linear-gradient(45deg,#08104a,#4f0463); color:white; box-shadow:0 10px 40px rgba(79,4,99,0.25); border:2px solid rgba(255,255,255,0.04)}
+.neon-text{color:var(--neon-green); text-shadow:0 0 12px rgba(110,255,161,0.9)}
+.neon-btn{display:inline-block;padding:12px 18px;border-radius:16px;background:linear-gradient(90deg,var(--neon-blue),var(--neon-pink));color:#fff;text-decoration:none;box-shadow:0 8px 30px rgba(0,220,255,0.12);border:1px solid rgba(255,255,255,0.12)}
+.neon-btn:hover{transform:translateY(-4px) scale(1.02);filter:brightness(1.05);box-shadow:0 18px 60px rgba(0,220,255,0.2)}
+
+/* Sections */
+.section{margin:18px;border-radius:18px;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.35));backdrop-filter:blur(6px);box-shadow:0 8px 36px rgba(2,6,23,0.08);border:2px solid rgba(255,255,255,0.06)}
+.section-title{font-size:22px;margin-bottom:12px; text-shadow:0 0 8px rgba(255,255,255,0.15)}
+
+/* Accordion grid */
+.accordion-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.neon-card{position:relative;padding:12px;border-radius:16px;overflow:hidden;border:2px solid rgba(255,255,255,0.06);box-shadow:0 8px 30px rgba(0,0,0,0.08)}
+.card-img{width:100%;height:140px;object-fit:cover;border-radius:10px;box-shadow:inset 0 0 40px rgba(255,255,255,0.02)}
+.card-title{display:block;width:100%;text-align:left;margin-top:8px;padding:8px;border-radius:12px;background:linear-gradient(90deg, rgba(0,0,0,0.05), rgba(255,255,255,0.02));font-weight:700;cursor:pointer;border:2px solid rgba(255,255,255,0.03)}
+.acc-panel{max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(.2,.9,.3,1);padding:0 6px}
+.card.open .acc-panel{max-height:420px;padding:8px 6px}
+
+/* Neon outlines per problem */
+.anxiety{border-image: linear-gradient(45deg,#00d4ff,#8b5cf6) 1; box-shadow:0 8px 40px rgba(0,212,255,0.08)}
+.depresion{border-image: linear-gradient(45deg,#0b254b,#1e3a8a) 1}
+.tca{border-image: linear-gradient(45deg,#ff35c7,#10b981) 1}
+.tdah{border-image: linear-gradient(45deg,#ffd24d,#fb923c) 1}
+.estres{border-image: linear-gradient(45deg,#ff6b6b,#ffb86b) 1}
+.sustancias{border-image: linear-gradient(45deg,#9ca3af,#ef4444) 1}
+
+/* Tests table */
+.tests-table{width:100%;border-collapse:collapse}
+.tests-table th, .tests-table td{padding:10px;border-bottom:1px dashed rgba(0,0,0,0.06)}
+
+/* Relax grid */
+.relax-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.relax-card{padding:8px;border-radius:12px;background:linear-gradient(90deg,rgba(255,255,255,0.6),rgba(255,255,255,0.4));box-shadow:0 8px 40px rgba(0,0,0,0.06)}
+.relax-card iframe{width:100%;height:160px;border-radius:8px;border:none}
+
+/* Tabs */
+.tabs{display:flex;gap:8px;margin-bottom:12px}
+.tab-btn{padding:8px 12px;border-radius:10px;background:linear-gradient(90deg,#fff,#fff);cursor:pointer;border:2px solid rgba(0,0,0,0.05)}
+.tab-btn.active{box-shadow:0 8px 30px rgba(0,0,0,0.08)}
+
+/* Resources */
+.resources-grid{display:flex;flex-wrap:wrap;gap:10px}
+.resource{padding:12px;border-radius:10px;background:linear-gradient(90deg,#fff,#fff);display:inline-block;text-decoration:none;color:inherit;box-shadow:0 8px 30px rgba(0,0,0,0.06)}
+
+/* Forms */
+.well-form ol{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.well-form select{width:100%;padding:8px;border-radius:8px}
+.suggest-form{display:grid;gap:8px}
+.form-actions{display:flex;gap:8px;align-items:center}
+.hint{font-size:12px;opacity:0.8}
+
+/* Footer */
+.site-footer{padding:18px;text-align:center;opacity:0.9}
+
+/* Neon glows and animations */
+@keyframes neonGlow {
+  0% { box-shadow:0 0 6px rgba(0,212,255,0.2); transform:translateY(0) }
+  50% { box-shadow:0 0 18px rgba(255,53,199,0.28); transform:translateY(-6px) }
+  100% { box-shadow:0 0 6px rgba(110,255,161,0.2); transform:translateY(0) }
+}
+.neon-card:hover{animation:neonGlow 2.2s ease-in-out infinite}
+
+/* small responsive adjustments */
+@media (max-width:800px){
+  .hero{padding:22px}
+  .card-img{height:120px}
+}
+
+
+/* ---- Efecto suave y borroso en tarjetas ---- */
+.card-background {
+  transition: filter 0.6s ease-in-out;
+}
+
+.card-background.blur {
+  filter: blur(6px) brightness(0.9);
+}
+
+
+/* ---- Blur suave aplicado a todas las tarjetas ---- */
+.card-background {
+  filter: blur(2px) brightness(0.95);
+  transition: filter 0.6s ease-in-out;
+}
+
+.card-background.blur {
+  filter: blur(6px) brightness(0.9);
+}
+
+
+/* --- Mejoras de legibilidad en tarjetas --- */
+
+.card {
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* oscurece fondo */
+    z-index: 1;
+}
+
+.card-text, .card-content {
+    position: relative;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.5); /* fondo detrás del texto */
+    color: #fff !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+
+/* --- Ajuste de tamaño de fuente --- */
+
+.card-text, .card-content {
+    font-size: 1.05rem; /* tamaño más grande para lectura cómoda */
+    line-height: 1.6;   /* espacio entre líneas */
+}
+
+
+/* ===== Estilos para logotipo principal ===== */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+.main-logo {
+    max-width: 300px;
+    width: 80%;
+    height: auto;
+}
+
+/* ===== Estilos para ícono en header ===== */
+.icon-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+.site-icon {
+    width: 50px;
+    height: auto;
+}
+@media (max-width: 768px) {
+    .main-logo {
+        max-width: 200px;
+    }
+    .site-icon {
+        width: 40px;
+    }
+}
+
+
+/* ===== Estilos para el logotipo en el header ===== */
+.header-logo {
+    height: 60px;
+    width: auto;
+    vertical-align: middle;
+}
+
+/* ===== Ícono clickeable en esquina izquierda ===== */
+.icon-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+.site-icon {
+    width: 45px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+.site-icon:hover {
+    transform: scale(1.1);
+}
+@media (max-width: 768px) {
+    .header-logo {
+        height: 45px;
+    }
+    .site-icon {
+        width: 35px;
+    }
+}
+
+
+/* ===== Efecto Neón Multicolor ===== */
+@keyframes neonGlow {
+    0% { text-shadow: 0 0 5px #ff00ff, 0 0 10px #00ffff, 0 0 20px #ff00ff; color: #fff; }
+    25% { text-shadow: 0 0 5px #00ff00, 0 0 15px #ff00ff, 0 0 25px #00ffff; color: #fff; }
+    50% { text-shadow: 0 0 10px #ffff00, 0 0 20px #00ff00, 0 0 30px #ff00ff; color: #fff; }
+    75% { text-shadow: 0 0 5px #00ffff, 0 0 15px #ff00ff, 0 0 25px #00ff00; color: #fff; }
+    100% { text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff, 0 0 30px #00ff00; color: #fff; }
+}
+
+.neon-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.2rem;
+    font-weight: bold;
+    animation: neonGlow 3s infinite alternate;
+}
+
+/* ===== Hero ===== */
+.hero-section {
+    text-align: center;
+    padding: 100px 20px;
+}
+.welcome-text {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #fff;
+    text-shadow: 0 0 5px #00ffff;
+}
+.hero-logo {
+    max-width: 400px;
+    width: 80%;
+    height: auto;
+    filter: drop-shadow(0 0 15px #ff00ff) drop-shadow(0 0 30px #00ffff);
+    margin-bottom: 20px;
+}
+.btn-explorar {
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    border: 2px solid transparent;
+    border-radius: 30px;
+    text-decoration: none;
+    animation: neonGlow 3s infinite alternate;
+    background: transparent;
+    transition: background 0.3s ease;
+}
+.btn-explorar:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+
+/* ===== Efecto 3D Multicolor para el título OPENMIND ===== */
+.neon-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #ff00ff, #00ffff, #00ff00, #ffff00, #ff00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400% 400%;
+    text-shadow: 
+        2px 2px 5px rgba(0,0,0,0.6),   /* efecto 3D sombra */
+        0 0 10px #ff00ff,
+        0 0 20px #00ffff,
+        0 0 30px #00ff00;
+    animation: neonShift 6s infinite linear, neonGlow 3s infinite alternate;
+}
+
+@keyframes neonShift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  background: url("img/logotipo.jpg") no-repeat center center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 20px;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 1;
+}
